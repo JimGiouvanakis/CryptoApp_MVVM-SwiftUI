@@ -45,20 +45,28 @@ final class AuthenticationManager {
             throw GoogleAuthenticationError.runtimeError("There is no root view controller!")
         }
         
-        let result = try await GIDSignIn.sharedInstance.signIn(
-            withPresenting: rootViewController
-        )
-        let user = result.user
-        guard let idToken = user.idToken?.tokenString else {
-            throw GoogleAuthenticationError.runtimeError("Unexpected error occurred, please retry")
+        do {
+            let result = try? await GIDSignIn.sharedInstance.signIn (
+                withPresenting: rootViewController
+            )
+            guard let user = result?.user else {
+             throw GoogleAuthenticationError.runtimeError("Unexpected error occurred, please retry")
+            }
+            guard let idToken = user.idToken?.tokenString else {
+                throw GoogleAuthenticationError.runtimeError("Unexpected error occurred, please retry")
+            }
+            
+            let credential = GoogleAuthProvider.credential(
+                withIDToken: idToken, accessToken: user.accessToken.tokenString
+            )
+            try await Auth.auth().signIn(with: credential)
+            
+            AppViewModel.shared.userLogStatus = .google
+        } catch {
+            print(error)
         }
         
-        let credential = GoogleAuthProvider.credential(
-            withIDToken: idToken, accessToken: user.accessToken.tokenString
-        )
-        try await Auth.auth().signIn(with: credential)
-        
-        AppViewModel.shared.userLogStatus = .google
+  
     }
     
     

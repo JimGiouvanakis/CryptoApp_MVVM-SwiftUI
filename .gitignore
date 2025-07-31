@@ -144,6 +144,7 @@ xcuserdata
 
 ### Firebase ###
 **/GoogleService-Info.plist
+**/CryptoApp-MVVM-SwiftUI-Info.plist
 
 ### Constant ### 
 Constants.swift
