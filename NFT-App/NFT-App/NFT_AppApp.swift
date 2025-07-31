@@ -20,7 +20,7 @@ struct NFT_AppApp: App {
     
     var body: some Scene {
         WindowGroup {
-            SplashScreenView()
+            SplashView()
         }
     }
 }
