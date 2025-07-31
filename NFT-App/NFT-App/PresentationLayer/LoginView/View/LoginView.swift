@@ -152,9 +152,10 @@ struct LoginView: View {
                     .frame(height: UIScreen.main.bounds.height * 0.05)
                 
                 HStack {
-                    Image("Google")
+                    Image(.googleIcon)
                         .resizable()
                         .frame(width: 20, height: 20)
+                        .foregroundColor(Color.black)
                     
                     Text("Google Sing In")
                 }
