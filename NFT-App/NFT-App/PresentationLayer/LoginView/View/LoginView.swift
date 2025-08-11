@@ -15,8 +15,6 @@ struct LoginView: View {
     
     @State private var viewModel: LoginViewModel = .init()
     
-    @Environment(\.dismiss) var dismiss
-    
     // MARK: - View
     
     var body: some View {
@@ -84,10 +82,11 @@ struct LoginView: View {
         VStack {
             TextField(" ", text: $viewModel.emailTextFieldText)
                 .placeholder(when: viewModel.emailTextFieldText.isEmpty) {
-                    Text("Email Address").foregroundColor(Color.purple)
+                    Text("Email Address")
+                        .foregroundColor(Color.purple)
                         .padding(.vertical)
-                        .padding(.leading)
                 }
+                .padding(.leading)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.purple, lineWidth: 1)
@@ -97,10 +96,11 @@ struct LoginView: View {
             
             SecureField(" ", text: $viewModel.passwordTextFieldText)
                 .placeholder(when: viewModel.passwordTextFieldText.isEmpty) {
-                    Text("Password").foregroundColor(Color.purple)
+                    Text("Password")
+                        .foregroundColor(Color.purple)
                         .padding(.vertical)
-                        .padding(.leading)
                 }
+                .padding(.leading)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(Color.purple, lineWidth: 1)
