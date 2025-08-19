@@ -23,7 +23,7 @@ final class AuthenticationManager {
     
     func singInUser(email: String, password: String) async throws  {
         do {
-            let user = try await Auth.auth().signIn(withEmail: email, password: password)
+            try await Auth.auth().signIn(withEmail: email, password: password)
             AppViewModel.shared.userLogStatus = .email
         } catch {
             throw error
@@ -64,6 +64,7 @@ final class AuthenticationManager {
             AppViewModel.shared.userLogStatus = .google
         } catch {
             print(error)
+            throw error
         }
         
   

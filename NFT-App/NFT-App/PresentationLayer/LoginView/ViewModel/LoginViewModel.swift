@@ -20,7 +20,7 @@ final class LoginViewModel {
     var popUpText: String = ""
     var popUpHeadText: String = ""
     var isEroor: Bool = false
-   
+    
     var path = NavigationPath()
     
     func singInUser() async {
@@ -55,11 +55,6 @@ final class LoginViewModel {
             path.append(LoginStateEnum.login)
         } catch {
             print(error)
-            
-            self.showPopUp = true
-            self.isEroor = true
-            self.popUpText = "Try again"
         }
     }
-    
 }
