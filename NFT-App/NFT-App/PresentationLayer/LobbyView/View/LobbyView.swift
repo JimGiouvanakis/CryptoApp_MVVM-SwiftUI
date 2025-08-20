@@ -20,15 +20,15 @@ struct LobbyView: View {
         NavigationView {
             self.makeMainView()
                 .navigationDestination(isPresented: $viewModel.popToLogin) {
-                LoginView()
-                    .navigationBarBackButtonHidden(true)
-            }
-            .sheet(isPresented: $viewModel.showFavorite) {
-                FavoriteView(favoriteItemList: $viewModel.favoriteItemList)
-            }
-            .onAppear() {
-                Task { await viewModel.getData() }
-            }
+                    LoginView()
+                        .navigationBarBackButtonHidden(true)
+                }
+                .sheet(isPresented: $viewModel.showFavorite) {
+                    FavoriteView(favoriteItemList: $viewModel.favoriteItemList)
+                }
+                .onAppear() {
+                    Task { await viewModel.getData() }
+                }
         }
         .navigationBarBackButtonHidden(true)
     }
@@ -93,10 +93,10 @@ struct LobbyView: View {
             Button(action: {
                 viewModel.tabViewSelect = .home
             }) {
-                    Image(systemName: "house")
-                        .font(.title)
-                        .padding()
-                        .foregroundColor(.purple)
+                Image(systemName: "house")
+                    .font(.title)
+                    .padding()
+                    .foregroundColor(.purple)
             }
             
             Button(action: {

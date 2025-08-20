@@ -12,12 +12,12 @@ struct NewListView: View {
     @State var scrollPosition: Int = 0
     @State var isAutoPlay: Bool = true
     
-    @Binding var uiModel: [Self.UIModel]
+    var uiModel: [UIModel]
     
     var timer = Timer.publish(every: 8, on: .main, in: .common).autoconnect()
     
     
-    var filteredNFTs: [Self.UIModel] {
+    var filteredNFTs: [UIModel] {
         uiModel.filter { $0.numberOfOwners < 1000 }
     }
     

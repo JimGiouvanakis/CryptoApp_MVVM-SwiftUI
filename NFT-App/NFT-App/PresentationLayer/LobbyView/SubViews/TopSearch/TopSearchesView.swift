@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TopSearchesView: View {
 
-    @Binding var uiModel: [Self.UIModel]
+    var uiModel: [Self.UIModel]
     
     var didTapItem: (String) -> ()?
     
