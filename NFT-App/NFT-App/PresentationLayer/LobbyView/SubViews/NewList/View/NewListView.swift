@@ -26,28 +26,23 @@ struct NewListView: View {
             TabView(selection: $scrollPosition) {
                 ForEach(filteredNFTs.indices , id: \.self) { line in
                     ZStack {
-                        AsyncImage(url: URL(string: filteredNFTs[line].imageURL)) { result in
-                            result.image?
-                                .resizable()
-                                .scaledToFit()
-                                .clipShape(RoundedRectangle(cornerRadius: 20))
-                                .padding()
-                                .shadow(radius: 50, x: 50, y: 50)
-                        }
-                        .aspectRatio(1, contentMode: .fit)
+                        RemoteImageView(urlString: self.filteredNFTs[line].imageURL)
+                        .aspectRatio(contentMode: .fit)
+                        .cornerRadius(20)
+                        .shadow(radius: 50, x: 50, y: 50)
                         
                         HStack {
                             VStack {
-                                Text("NEW")
-                                    .bold()
-                                    .padding(5)
-                                    .background(.yellow, in:RoundedRectangle(cornerRadius: 10))
-                                    .rotationEffect(.degrees(-30))
-                                    .font(.footnote)
-                                    .foregroundStyle(Color.black)
+                                    Text("NEW")
+                                        .bold()
+                                        .padding(4)
+                                        .padding(.horizontal)
+                                        .background(Color.yellow)
+                                        .cornerRadius(10)
+                                        .rotationEffect(.degrees(-30))
+                                        .foregroundStyle(Color.black)
                                 
                                 Spacer()
-                                
                             }
                             
                             Spacer()
@@ -72,6 +67,6 @@ struct NewListView: View {
     }
 }
 
-//#Preview {
-//    NewListView()
-//}
+#Preview {
+    LobbyView()
+}

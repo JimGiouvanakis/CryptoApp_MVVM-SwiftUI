@@ -115,7 +115,7 @@ struct FavoriteView: View {
             .background(Color.black.ignoresSafeArea())
         }
         .sheet(isPresented: $showDetails, content: {
-            PriceDetailsView(clickedItem: $clickedItem)
+            PriceDetailsView(clickedItem: clickedItem)
         })
     }
     

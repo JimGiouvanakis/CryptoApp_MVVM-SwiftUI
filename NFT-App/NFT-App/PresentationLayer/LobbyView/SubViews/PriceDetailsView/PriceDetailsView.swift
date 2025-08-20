@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PriceDetailsView: View {
     
-    @Binding var clickedItem: NFT?
+    var clickedItem: NFT?
     
     var body: some View {
         

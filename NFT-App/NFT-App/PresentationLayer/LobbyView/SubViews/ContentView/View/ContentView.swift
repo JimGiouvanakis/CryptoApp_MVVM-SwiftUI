@@ -19,13 +19,13 @@ struct ContentView : View {
     // MARK: - View
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             self.makeMainView()
                 .navigationDestination(isPresented: $viewModel.pushToDetails) {
-                    PriceDetailsView(clickedItem: $viewModel.navigationNFT)
+                    PriceDetailsView(clickedItem: viewModel.navigationNFT)
                 }
                 .sheet(isPresented: $viewModel.showDetails) {
-                    PriceDetailsView(clickedItem: $viewModel.navigationNFT)
+                    PriceDetailsView(clickedItem: viewModel.navigationNFT)
                 }
                 .background(Color.black.ignoresSafeArea())
         }
@@ -40,7 +40,7 @@ struct ContentView : View {
             ScrollView {
                 
                 NewListView(uiModel: viewModel.makeNewListViewUIModel(nfts: self.nfts))
-                    .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height * 0.2)
+                    .frame(width: UIScreen.main.bounds.width * 0.3, height: UIScreen.main.bounds.height * 0.2)
                 
                 Divider()
                 
@@ -55,7 +55,7 @@ struct ContentView : View {
                 .padding(.bottom)
                 
                 TopSearchesView(uiModel: viewModel.makeTopSearchViewUIModel(nfts: self.nfts), didTapItem: { nftname in
-                    viewModel.navigationNFT = findNFT(nftname: nftname)
+                    viewModel.navigationNFT = self.findNFT(nftname: nftname)
                     viewModel.pushToDetails = true
                 })
                 .padding(.leading, 8)
