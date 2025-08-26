@@ -35,7 +35,7 @@ struct SettingView: View {
                             .padding(.trailing,210)
                         
                         if userStatus == .email || userStatus == .google {
-                            Button{
+                            Button {
                                 Task { let status = await singOut()
                                     if status == true {
                                         AppViewModel.shared.userDefaults.set("", forKey: "Token")
@@ -60,7 +60,7 @@ struct SettingView: View {
                         }
                         
                         if userStatus == .email {
-                            Button{
+                            Button {
                                 passwordPopUp = true
                             } label: {
                                 Text("Update Password")
@@ -76,7 +76,7 @@ struct SettingView: View {
                         }
                         
                         if userStatus == .email {
-                            Button{
+                            Button {
                                 emailPopUp = true
                             } label: {
                                 Text("Update Email")
@@ -92,8 +92,8 @@ struct SettingView: View {
                         }
                         
                         if userStatus == .loggedOut {
-                            Button{
-                                loginInView = true
+                            Button {
+                                self.loginInView = true
                             } label: {
                                 Text("Log In")
                                     .font(.title3)

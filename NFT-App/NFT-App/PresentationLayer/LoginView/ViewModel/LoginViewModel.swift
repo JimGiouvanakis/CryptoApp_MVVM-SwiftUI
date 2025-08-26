@@ -23,6 +23,9 @@ final class LoginViewModel {
     
     var path = NavigationPath()
     
+    var goToLobby:Bool = false
+    var goToCreate:Bool = false
+    
     func singInUser() async {
         do {
             try await  AuthenticationManager.shared.singInUser(email: emailTextFieldText, password: passwordTextFieldText)
@@ -35,7 +38,8 @@ final class LoginViewModel {
             
             AppViewModel.shared.userDefaults.synchronize()
             
-            path.append(LoginStateEnum.login)
+//            path.append(LoginStateEnum.login)
+            self.goToLobby = true
             
         } catch let authErrors as NSError {
             if let errorCode = AuthErrorCode(rawValue: authErrors.code) {
@@ -52,7 +56,7 @@ final class LoginViewModel {
     func googleSingIn() async {
         do {
             try await  AuthenticationManager.shared.googleSingIn()
-            path.append(LoginStateEnum.login)
+            self.goToLobby = true
         } catch {
             print(error)
         }

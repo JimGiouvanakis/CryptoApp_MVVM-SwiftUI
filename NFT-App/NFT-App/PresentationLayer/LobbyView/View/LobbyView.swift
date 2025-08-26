@@ -17,7 +17,7 @@ struct LobbyView: View {
     // MARK: - View
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             self.makeMainView()
                 .navigationDestination(isPresented: $viewModel.popToLogin) {
                     LoginView()
@@ -25,12 +25,15 @@ struct LobbyView: View {
                 }
                 .sheet(isPresented: $viewModel.showFavorite) {
                     FavoriteView(favoriteItemList: $viewModel.favoriteItemList)
+                        .navigationBarBackButtonHidden(true)
                 }
                 .onAppear() {
                     Task { await viewModel.getData() }
                 }
+                .onChange(of: viewModel.popToLogin) { _, _ in
+                    viewModel.tabViewSelect = .home
+                }
         }
-        .navigationBarBackButtonHidden(true)
     }
     
     // MARK: - ViewBuilders

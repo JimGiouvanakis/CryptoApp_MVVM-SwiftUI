@@ -22,14 +22,13 @@ struct LoginView: View {
             ZStack {
                 self.makeMainView()
             }
-            .navigationDestination(for: LoginStateEnum.self, destination: { path in
-                switch path {
-                case .createAccount:
-                    CreateAccountView()
-                case .login:
-                    LobbyView()
-                }
-            })
+            .navigationDestination(isPresented: $viewModel.goToLobby) {
+                LobbyView()
+                    .navigationBarBackButtonHidden(true)
+            }
+            .navigationDestination(isPresented: $viewModel.goToCreate) {
+                CreateAccountView()
+            }
             .fullScreenCover(isPresented: $viewModel.showPopUp) {
                 PopUpView(isError: $viewModel.isEroor, popUpHeadText: $viewModel.popUpHeadText, popUpText: $viewModel.popUpText)
             }
@@ -86,6 +85,9 @@ struct LoginView: View {
                         .foregroundColor(Color.purple)
                         .padding(.vertical)
                 }
+                .onSubmit {
+                    Task { await viewModel.singInUser() }
+                }
                 .padding(.leading)
                 .overlay(
                     RoundedRectangle(cornerRadius: 10)
@@ -99,6 +101,9 @@ struct LoginView: View {
                     Text("Password")
                         .foregroundColor(Color.purple)
                         .padding(.vertical)
+                }
+                .onSubmit {
+                    Task { await viewModel.singInUser() }
                 }
                 .padding(.leading)
                 .overlay(
@@ -169,7 +174,7 @@ struct LoginView: View {
     @ViewBuilder
     private func makeNoUserButton() -> some View {
         Button {
-            viewModel.path.append(LoginStateEnum.createAccount)
+            viewModel.goToCreate.toggle()
         } label: {
             Text("New User? Create Account Here")
         }

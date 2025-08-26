@@ -18,28 +18,66 @@ struct FavoriteView: View {
     @State private var userStatus: UserLogStatus = .email
     
     var body: some View {
-        ZStack {
-            if userStatus == .loggedOut {
-                VStack {
-                    
-                    Spacer()
-                    
-                    makeLogOutPopUp()
-                    
-                    Spacer()
+        NavigationStack {
+            ZStack {
+                if userStatus == .loggedOut {
+                    VStack {
+                        
+                        Spacer()
+                        
+                        makeLogOutPopUp()
+                        
+                        Spacer()
+                    }
+                } else {
+                    makeFavView()
+                        .sheet(isPresented: $showDetails, content: {
+                            PriceDetailsView(clickedItem: clickedItem)
+                        })
                 }
-            } else {
-                makeFavView()
             }
-        }
-        .onAppear {
-            setStatus()
+            .onAppear {
+                setStatus()
+            }
+            .navigationDestination(isPresented: $loginInView) {
+                LoginView()
+                    .navigationBarBackButtonHidden(true)
+            }
         }
     }
     
     @ViewBuilder
+    func makeLogOutPopUp() -> some View {
+        ZStack {
+            VStack {
+                Text("Sign In to get access to Favorites")
+                    .font(.title3)
+                    .padding(10)
+                
+                Button {
+                    loginInView = true
+                } label: {
+                    Text("Sing In")
+                        .padding([.leading,.trailing],70)
+                }
+                .padding()
+                .background(Color.black)
+                .foregroundColor(.purple)
+                .cornerRadius(8)
+            }
+            .frame(width: 320, height: 200)
+            .background(Color.purple)
+            .cornerRadius(12)
+            .shadow(radius: 10)
+            .foregroundColor(.black)
+            
+            Spacer()
+        }
+        .background(BackgroundClearView())
+    }
+    
+    @ViewBuilder
     func makeFavView() -> some View {
-        NavigationView {
             ScrollView {
                 HStack {
                     
@@ -113,44 +151,6 @@ struct FavoriteView: View {
                 .background(Color.black.ignoresSafeArea())
             }
             .background(Color.black.ignoresSafeArea())
-        }
-        .sheet(isPresented: $showDetails, content: {
-            PriceDetailsView(clickedItem: clickedItem)
-        })
-    }
-    
-    @ViewBuilder
-    func makeLogOutPopUp() -> some View {
-        ZStack {
-            VStack {
-                Text("Sign In to get access to Favorites")
-                    .font(.title3)
-                    .padding(10)
-                
-                Button {
-                    loginInView = true
-                } label: {
-                    Text("Sing In")
-                        .padding([.leading,.trailing],70)
-                }
-                .padding()
-                .background(Color.black)
-                .foregroundColor(.purple)
-                .cornerRadius(8)
-                
-                NavigationLink(destination:LoginView() ,isActive: $loginInView) {
-                    EmptyView()
-                }
-            }
-            .frame(width: 320, height: 200)
-            .background(Color.purple)
-            .cornerRadius(12)
-            .shadow(radius: 10)
-            .foregroundColor(.black)
-            
-            Spacer()
-        }
-        .background(BackgroundClearView())
     }
     
     func setStatus() {
